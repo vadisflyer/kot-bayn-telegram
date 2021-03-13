@@ -1,2 +1,2 @@
 # kot-bayn
-A bot that tells stories.
+Bot for the public vkontakte. He tells stories.
