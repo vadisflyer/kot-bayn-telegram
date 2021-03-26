@@ -3,11 +3,8 @@ from vk_api.longpoll import VkLongPoll, VkEventType
 
 import config
 import util
-import requests
 import random
 
-from datetime import datetime
-from time import sleep
 
 # Logins with two different tokens
 def start():

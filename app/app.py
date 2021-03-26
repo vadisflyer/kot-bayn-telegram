@@ -1,7 +1,7 @@
 # Main app file
 
 import api
-import verbatim_handler, regex_handler, default_handler, publish_post
+import regex_handler, default_handler, publish_post
 import util
 import random
 import config
@@ -17,7 +17,6 @@ def responder(event):
 
 	def chous_ansver():
 		a=publish_post.handle(event) \
-			or verbatim_handler.handle(msg) \
 			or regex_handler.handle(msg) \
 			or default_handler.handle()
 		return a
