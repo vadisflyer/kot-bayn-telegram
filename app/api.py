@@ -46,11 +46,20 @@ def sendNewStory():
 	return sendStory(config.NEW_POSTS_COUNT)
 
 def publish(user_id,msg):
+	kot = '''　　　　　／＞　 フ
+			　　　　　| 　_　 _|
+			　 　　　／`ミ _x 彡
+			　　 　 /　　　 　 |
+			　　　 /　 ヽ　　 ﾉ
+			　／￣|　　 |　|　|
+			　| (￣ヽ＿_ヽ_)_)
+			　＼二つ
+		'''
 	if msg not in ['стоп', 'Стоп', 'Отмена', 'отмена']:
 		user = vk_acess_wall_post.method("users.get", {"user_ids": user_id}) 
 		fullname = user[0]['first_name'] +  ' ' + user[0]['last_name']
 
-		message = msg + '\nАвтор : *id'+str(user_id)+' ('+fullname+')'
+		message = f'{kot}\n{msg}\n\nАвтор : *id{str(user_id)} ({fullname})'
 		post_msg={
 			r'owner_id': config.GROUP_ID,
 			r'from_group': 1,
