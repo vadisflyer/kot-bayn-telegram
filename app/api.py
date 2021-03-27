@@ -66,7 +66,7 @@ def publish(user_id,msg):
 	else: ans =  'Галя, у нас отмена!'
 	return ans
 
-def findStoryByTopic(msg = '',count = config.POSTS_COUNT):
+def findStoryByTopic(msg = '',user_id = 0,count = config.POSTS_COUNT):
 	print('count: ',type(count) , ' ' , count)
 	print('msg: ', type(msg) , ' ' , msg)
 	if msg not in ['стоп', 'Стоп', 'Отмена', 'отмена']:
@@ -81,7 +81,10 @@ def findStoryByTopic(msg = '',count = config.POSTS_COUNT):
 			story = util.selectRandom(response['items'], count - 1)
 	#print(story)
 			ans = {'attachment': 'wall' + config.GROUP_ID + '_' + str(story['id'])}
-		else: ans = 'У меня нет таких сказок.'
-	else: ans =  'Галя, у нас отмена!'
+			config.users_id_list_find.remove(user_id)
+		else: ans = 'У меня нет таких сказок.(\n Предложите другую тему или для отмены скажите:"Стоп".'
+	else:
+		ans =  'Галя, у нас отмена!'
+		config.users_id_list_find.remove(user_id)
 	return ans
 

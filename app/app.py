@@ -31,9 +31,8 @@ def responder(event):
 		else: ans = chous_ansver()
 	elif len(config.users_id_list_find):
 		if user_id in config.users_id_list_find:
-			config.users_id_list_find.remove(user_id)
-
-			ans = api.findStoryByTopic(msg)
+			
+			ans = api.findStoryByTopic(msg, user_id)
 #			if not ans: ans = 'У меня нет таких сказок'
 		else: ans = chous_ansver()
 # Try various handlers until the reply is found
