@@ -1,7 +1,7 @@
 # Main app file
 
 import api
-import regex_handler, default_handler, publish_post
+import regex_handler, default_handler, publish_post, search_by_topic
 import util
 import random
 import config
@@ -17,20 +17,27 @@ def responder(event):
 
 	def chous_ansver():
 		a=publish_post.handle(event) \
-			or regex_handler.handle(msg) \
+			or search_by_topic.handle(event) \
+            or regex_handler.handle(msg) \
 			or default_handler.handle()
 		return a
 
-	if len(config.users_id_list):
-		if user_id in config.users_id_list:
-			config.users_id_list.remove(user_id)
+	if len(config.users_id_list_post):
+		if user_id in config.users_id_list_post:
+			config.users_id_list_post.remove(user_id)
 
 			ans = api.publish(user_id,msg)
 		
 		else: ans = chous_ansver()
-	# Try various handlers until the reply is found
-	else:
-		ans = chous_ansver()
+	elif len(config.users_id_list_find):
+		if user_id in config.users_id_list_find:
+			config.users_id_list_find.remove(user_id)
+
+			ans = api.findStoryByTopic(msg)
+#			if not ans: ans = 'У меня нет таких сказок'
+		else: ans = chous_ansver()
+# Try various handlers until the reply is found
+	else:ans = chous_ansver()
 
 	# Apply some transformations, allowing handlers to return callables and lists
 	if callable(ans): ans = ans()

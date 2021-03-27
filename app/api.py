@@ -65,3 +65,23 @@ def publish(user_id,msg):
 		ans =  'Спасибо, что вы с нами. Пишите еще!)'
 	else: ans =  'Галя, у нас отмена!'
 	return ans
+
+def findStoryByTopic(msg = '',count = config.POSTS_COUNT):
+	print('count: ',type(count) , ' ' , count)
+	print('msg: ', type(msg) , ' ' , msg)
+	if msg not in ['стоп', 'Стоп', 'Отмена', 'отмена']:
+
+		response = vk_service.method('wall.search', {
+			'owner_id': config.GROUP_ID,
+			'query': msg,
+			'count': count
+		})
+		if response['count']:
+			count = min(count, response['count'])
+			story = util.selectRandom(response['items'], count - 1)
+	#print(story)
+			ans = {'attachment': 'wall' + config.GROUP_ID + '_' + str(story['id'])}
+		else: ans = 'У меня нет таких сказок.'
+	else: ans =  'Галя, у нас отмена!'
+	return ans
+
