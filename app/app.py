@@ -2,7 +2,7 @@
 
 import api
 import regex_handler, default_handler, publish_post, search_by_topic
-import util
+#import util
 import random
 import config
 
@@ -15,32 +15,25 @@ def responder(event):
 	user_id = event.user_id
 	message = msg+'\n'+str(user_id)
 
-	def chous_ansver():
+	def chous_answer():
 		a=publish_post.handle(event) \
 			or search_by_topic.handle(event) \
             or regex_handler.handle(msg) \
 			or default_handler.handle()
 		return a
 
-	if len(config.users_id_list_post):
-		if user_id in config.users_id_list_post:
-			config.users_id_list_post.remove(user_id)
+	if user_id in config.users_id_list_post:
+		ans = api.publish(user_id,msg)
 
-			ans = api.publish(user_id,msg)
-		
-		else: ans = chous_ansver()
-	elif len(config.users_id_list_find):
-		if user_id in config.users_id_list_find:
-			
-			ans = api.findStoryByTopic(msg, user_id)
-#			if not ans: ans = 'У меня нет таких сказок'
-		else: ans = chous_ansver()
-# Try various handlers until the reply is found
-	else:ans = chous_ansver()
+	elif user_id in config.users_id_list_find:
+		ans = api.find_story_by_topic(msg, user_id)
+
+	else: ans = chous_answer()
+
 
 	# Apply some transformations, allowing handlers to return callables and lists
 	if callable(ans): ans = ans()
-	if type(ans) is list: ans = util.selectRandom(ans)
+	if type(ans) is list: ans = random.choice(ans)
 	if type(ans) is str: ans = {'message': ans}
 
 	# Send the reply
@@ -51,4 +44,4 @@ def responder(event):
 
 # App entrypoint
 api.start()
-api.poll(responder)
+api.poll_for_msg(responder)

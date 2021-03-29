@@ -1,9 +1,9 @@
 ﻿import random
 import re
 
-def compileRegex(pattern):
+def compile_regex(pattern):
 	return re.compile(pattern, re.IGNORECASE)
 
-def selectRandom(list, count = None):
+def select_random(list, count = None):
 	if count is None: count = len(list) - 1
 	return list[random.randint(0, count)]

@@ -1,4 +1,3 @@
-
 import config
 
 def handle(event):
