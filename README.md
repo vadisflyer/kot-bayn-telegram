@@ -1,7 +1,7 @@
 # kot-bayn
 Bot for the public vkontakte. He tells stories.
 You can chat with the bot in the following group:
-https://vk.com/club148176519
+https://vk.com/cot_bayn_dream_stories
 
 The program implements a dialogue with users through the VKontakte community. Features of the bot include:
 1)[Help] - a detailed message about the bot's capabilities;
